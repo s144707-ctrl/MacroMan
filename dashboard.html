@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MacrOman | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <!-- internal CSS: only for this page -->
+    <style>
+        .meals-table {
+            border-collapse: separate;
+            border-spacing: 3px;
+            border: 2px solid #222222;
+            border-radius: 10px;
+        }
+        .meals-table caption {
+            caption-side: top;
+            text-align: left;
+            font-weight: bold;
+            color: #555555;
+            padding-bottom: 6px;
+        }
+        .meals-table th,
+        .meals-table td {
+            padding: 10px 12px;
+        }
+        .meals-table td.num,
+        .meals-table th.num {
+            text-align: right;
+        }
+        .meals-table tbody tr:nth-child(even) td {
+            background-color: #fafafa;
+        }
+        .meals-table td.meal {
+            background-color: #fbe9e7;
+            color: #c62828;
+            font-weight: bold;
+            vertical-align: middle;
+            border-bottom: none;
+        }
+        .meals-table tfoot td {
+            font-weight: bold;
+            border-bottom: none;
+        }
+        .meals-table tr.total td {
+            background-color: #222222;
+            color: #ffffff;
+        }
+        .meals-table tr.goal td {
+            background-color: #eeeeee;
+        }
+        .meals-table tr.left td {
+            background-color: #c62828;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="images/Logo.png" alt="MacrOman logo" id="logo" />
+        <span class="site-name">MacrOman</span>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="log-food.html">Log Food</a></li>
+                <li><a href="food-database.html">Food Database</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="goals.html">Goals &amp; Profile</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="register.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero"></section>
+
+    <main>
+        <h1>Today&rsquo;s Dashboard</h1>
+        <p class="intro">Sunday, 25 October 2026 &mdash; here is how today compares with your daily goals.</p>
+
+        <div class="cards">
+            <div class="summary-card"><strong>1,630</strong><span>of 2,200 kcal</span></div>
+            <div class="summary-card"><strong>79 g</strong><span>of 138 g protein</span></div>
+            <div class="summary-card"><strong>225 g</strong><span>of 248 g carbs</span></div>
+            <div class="summary-card"><strong>44 g</strong><span>of 73 g fat</span></div>
+        </div>
+
+        <h2>Goal progress</h2>
+        <p>Each bar shows the share of today&rsquo;s target you have already eaten.</p>
+
+        <div class="goal-label"><span>Calories</span><span>74%</span></div>
+        <div class="bar"><div class="bar-fill" style="width: 74%; background-color: #c62828;"></div></div>
+
+        <div class="goal-label"><span>Protein</span><span>57%</span></div>
+        <div class="bar"><div class="bar-fill" style="width: 57%;"></div></div>
+
+        <div class="goal-label"><span>Carbohydrates</span><span>91%</span></div>
+        <div class="bar"><div class="bar-fill" style="width: 91%;"></div></div>
+
+        <div class="goal-label"><span>Fats</span><span>60%</span></div>
+        <div class="bar"><div class="bar-fill" style="width: 60%;"></div></div>
+
+        <h2>Meals eaten today</h2>
+        <p>Your logged meals, grouped by mealtime.</p>
+
+        <div class="table-wrap">
+            <table class="meals-table">
+                <caption>Values per portion eaten</caption>
+                <thead>
+                    <tr>
+                        <th>Meal</th>
+                        <th>Food</th>
+                        <th>Portion</th>
+                        <th class="num">kcal</th>
+                        <th class="num">Protein (g)</th>
+                        <th class="num">Carbs (g)</th>
+                        <th class="num">Fat (g)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="meal" rowspan="2">Breakfast</td>
+                        <td>Omani bread (rakhal) with honey</td>
+                        <td>1 piece</td>
+                        <td class="num">250</td>
+                        <td class="num">6</td>
+                        <td class="num">45</td>
+                        <td class="num">5</td>
+                    </tr>
+                    <tr>
+                        <td>Karak tea</td>
+                        <td>1 cup</td>
+                        <td class="num">120</td>
+                        <td class="num">3</td>
+                        <td class="num">18</td>
+                        <td class="num">4</td>
+                    </tr>
+                    <tr>
+                        <td class="meal" rowspan="2">Lunch</td>
+                        <td>Chicken majboos</td>
+                        <td>1 plate</td>
+                        <td class="num">650</td>
+                        <td class="num">38</td>
+                        <td class="num">75</td>
+                        <td class="num">20</td>
+                    </tr>
+                    <tr>
+                        <td>Laban</td>
+                        <td>1 cup</td>
+                        <td class="num">90</td>
+                        <td class="num">6</td>
+                        <td class="num">10</td>
+                        <td class="num">3</td>
+                    </tr>
+                    <tr>
+                        <td class="meal">Snack</td>
+                        <td>Khalas dates</td>
+                        <td>5 dates</td>
+                        <td class="num">120</td>
+                        <td class="num">1</td>
+                        <td class="num">32</td>
+                        <td class="num">0</td>
+                    </tr>
+                    <tr>
+                        <td class="meal">Dinner</td>
+                        <td>Harees</td>
+                        <td>1 bowl</td>
+                        <td class="num">400</td>
+                        <td class="num">25</td>
+                        <td class="num">45</td>
+                        <td class="num">12</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="total">
+                        <td colspan="3">Total eaten</td>
+                        <td class="num">1,630</td>
+                        <td class="num">79</td>
+                        <td class="num">225</td>
+                        <td class="num">44</td>
+                    </tr>
+                    <tr class="goal">
+                        <td colspan="3">Daily goal</td>
+                        <td class="num">2,200</td>
+                        <td class="num">138</td>
+                        <td class="num">248</td>
+                        <td class="num">73</td>
+                    </tr>
+                    <tr class="left">
+                        <td colspan="3">Remaining</td>
+                        <td class="num">570</td>
+                        <td class="num">59</td>
+                        <td class="num">23</td>
+                        <td class="num">29</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <h2>What next?</h2>
+        <ol>
+            <li>Add your next meal on the <a href="log-food.html">Log Food</a> page.</li>
+            <li>Look up a dish in the <a href="food-database.html">Food Database</a>.</li>
+            <li>See your whole week on the <a href="progress.html">Progress</a> page.</li>
+        </ol>
+
+        <p class="cta">
+            You still have <strong>59 g of protein</strong> left today. Want to change your targets? Visit <a href="goals.html">Goals &amp; Profile</a>.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University</p>
+    </footer>
+
+</body>
+</html>
