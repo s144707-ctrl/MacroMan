@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MacrOman | Login</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+</head>
+<body>
+
+    <header>
+        <img src="images/Logo.png" alt="MacrOman logo" id="logo" />
+        <span class="site-name">MacrOman</span>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="log-food.html">Log Food</a></li>
+                <li><a href="food-database.html">Food Database</a></li>
+                <li><a href="progress.html">Progress</a></li>
+                <li><a href="goals.html">Goals &amp; Profile</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="register.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero"></section>
+
+    <main>
+        <h1>Login or Create an Account</h1>
+        <p class="intro">
+            Log in to see your dashboard, or create a free account to start tracking Omani and Gulf meals.
+        </p>
+
+        <div class="form-grid">
+
+            <!-- Form 1: Login -->
+            <form action="https://httpbin.org/get" method="get">
+                <fieldset>
+                    <legend>Login</legend>
+                    <input type="hidden" name="form_type" value="login" />
+
+                    <div class="field">
+                        <label for="login_email" class="required">Email</label>
+                        <input type="email" id="login_email" name="login_email" placeholder="you@example.com" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="login_password" class="required">Password</label>
+                        <input type="password" id="login_password" name="login_password" autocomplete="current-password" required />
+                    </div>
+
+                    <div class="field options">
+                        <label><input type="checkbox" name="remember_me" value="yes" />Keep me logged in</label>
+                    </div>
+
+                    <div class="buttons">
+                        <input type="submit" value="Log in" />
+                    </div>
+                </fieldset>
+            </form>
+
+            <!-- Form 2: Register -->
+            <form action="https://httpbin.org/get" method="get">
+                <fieldset>
+                    <legend>Create an account</legend>
+                    <input type="hidden" name="form_type" value="register" />
+
+                    <div class="field">
+                        <label for="reg_name" class="required">Full name</label>
+                        <input type="text" id="reg_name" name="full_name" placeholder="e.g. Maryam Al Balushi" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="reg_email" class="required">Email</label>
+                        <input type="email" id="reg_email" name="email" placeholder="you@example.com" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="reg_password" class="required">Password</label>
+                        <input type="password" id="reg_password" name="password" minlength="8" autocomplete="new-password" required />
+                        <span class="hint">At least 8 characters</span>
+                    </div>
+
+                    <div class="field">
+                        <label for="reg_birth" class="required">Date of birth</label>
+                        <input type="date" id="reg_birth" name="birth_date" min="1940-01-01" max="2012-12-31" required />
+                    </div>
+
+                    <div class="field options">
+                        <span class="group-label required">Gender</span>
+                        <label><input type="radio" name="gender" value="male" required />Male</label>
+                        <label><input type="radio" name="gender" value="female" />Female</label>
+                    </div>
+
+                    <div class="field options">
+                        <span class="group-label">I am interested in</span>
+                        <label><input type="checkbox" name="interest" value="weight_loss" />Losing weight</label>
+                        <label><input type="checkbox" name="interest" value="muscle_gain" />Building muscle</label>
+                        <label><input type="checkbox" name="interest" value="healthy_eating" />Eating healthier</label>
+                    </div>
+
+                    <div class="field options">
+                        <label><input type="checkbox" name="accept_terms" value="yes" required />I agree to the terms of use</label>
+                    </div>
+
+                    <div class="buttons">
+                        <input type="submit" value="Create account" />
+                        <input type="reset" value="Clear" />
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+
+        <p class="cta">
+            After you sign up, set your daily targets on the <a href="goals.html">Goals &amp; Profile</a> page.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University</p>
+    </footer>
+
+</body>
+</html>
