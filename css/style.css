@@ -123,8 +123,10 @@ main ol {
 
 .home-image {
     width: 100%;
+    max-width: 600px;
+    display: block;
+    margin: 20px auto;
     border-radius: 10px;
-    margin: 20px 0;
 }
 
 .cta {
