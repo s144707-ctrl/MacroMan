@@ -23,7 +23,7 @@
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
                 <li><a href="register.html">Login</a></li>
-            </ul>
+        </ul>
         </nav>
     </header>
 
@@ -51,8 +51,8 @@
                             <option value="gulf">Gulf Specialties</option>
                             <option value="beverages">Beverages</option>
                             <option value="desserts">Dates &amp; Sweets</option>
-                        </select>
-                    </div>
+                    </select>
+                </div>
                 </div>
                 <div class="buttons">
                     <input type="submit" value="Search" />
@@ -70,15 +70,18 @@
                 <caption>Macro details per standard portion</caption>
                 <thead>
                     <tr>
-                        <th>Dish Name</th>
-                        <th>Category</th>
-                        <th>Portion Size</th>
+                        <th rowspan="2">Dish Name</th>
+                        <th rowspan="2">Category</th>
+                        <th rowspan="2">Portion Size</th>
+                        <th colspan="4" style="text-align: center;">Nutrition per Portion</th>
+                    </tr>
+                    <tr>
                         <th class="num">Calories (kcal)</th>
                         <th class="num">Protein (g)</th>
                         <th class="num">Carbs (g)</th>
                         <th class="num">Fat (g)</th>
                     </tr>
-                </thead>
+                </thead>    
                 <tbody>
                     <tr>
                         <td>Omani Shuwa</td>
