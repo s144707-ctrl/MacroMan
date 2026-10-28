@@ -170,7 +170,7 @@ input[type="reset"]:hover {
     background-color: #fbe9e7;
 }
 
-/* adjacent sibling selector: small gap under each section heading's first paragraph */
+/* adjacent sibling selector: small gap under each section heading first paragraph */
 h2 + p {
     color: #555555;
 }
