@@ -4,70 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | About Us</title>
-    <link rel="stylesheet" href="css/style.css" />
-
-    <!-- internal CSS only for this page -->
-    <style>
-        p.story {
-            font-size: 18px;
-            text-align: justify;
-        }
-
-        .team dt {
-            font-weight: bold;
-            color: #c62828;
-            margin-top: 12px;
-        }
-
-        .team dd {
-            margin-left: 20px;
-            font-style: italic;
-        }
-
-        .email-box {
-            background-color: #111111;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-        }
-
-        .email-box a:link,
-        .email-box a:visited {
-            color: #ff8a80;
-            font-weight: bold;
-        }
-
-        .email-box a:hover {
-            color: #ffffff;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+<body class="d-flex flex-column min-vh-100">
 
-<body>
-    <header>
-        <img src="images/Logo.png" alt="MacrOman logo" id="logo" />
-        <span class="site-name">MacrOman</span>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="log-food.html">Log Food</a></li>
-                <li><a href="food-database.html">Food Database</a></li>
-                <li><a href="progress.html">Progress</a></li>
-                <li><a href="goals.html">Goals &amp; Profile</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="register.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/Logo.png" alt="MacrOman logo" width="40" class="me-2" />
+                MacrOman
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-xl-center">
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="log-food.html">Log Food</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="food-database.html">Food Database</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="progress.html">Progress</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="goals.html">Goals &amp; Profile</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="calculate.html">Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="questionnaire.html">Feedback</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="funpage.html">Fun</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap active" aria-current="page" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="btn btn-danger btn-sm ms-xl-2" href="register.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <section class="hero">
-    </section>
-
-    <main>
+    <main class="container my-4 flex-grow-1">
         <h1>About Us</h1>
 
         <h2>Our Story</h2>
@@ -115,7 +86,7 @@
         </dl>
 
         <div class="email-box">
-            <p style="font-size: 14px;">Have a question, a food we are missing, or feedback?</p>
+            <p>Have a question, a food we are missing, or feedback?</p>
             <p>
                 <a href="mailto:s144707@student.squ.edu.om?subject=MacrOman%20Inquiry">
                     Email us
@@ -123,11 +94,13 @@
             </p>
         </div>
 
+    
     </main>
 
-    <footer>
-        <p>&copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University</p>
+    <footer class="bg-dark text-white text-center py-3">
+        &copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

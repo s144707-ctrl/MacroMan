@@ -4,81 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | Dashboard</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/forms.css" />
-    <!-- internal CSS: only for this page -->
-    <style>
-        .meals-table {
-            border-collapse: separate;
-            border-spacing: 3px;
-            border: 2px solid #222222;
-            border-radius: 10px;
-        }
-        .meals-table caption {
-            caption-side: top;
-            text-align: left;
-            font-weight: bold;
-            color: #555555;
-            padding-bottom: 6px;
-        }
-        .meals-table th,
-        .meals-table td {
-            padding: 10px 12px;
-        }
-        .meals-table td.num,
-        .meals-table th.num {
-            text-align: right;
-        }
-        .meals-table tbody tr:nth-child(even) td {
-            background-color: #fafafa;
-        }
-        .meals-table td.meal {
-            background-color: #fbe9e7;
-            color: #c62828;
-            font-weight: bold;
-            vertical-align: middle;
-            border-bottom: none;
-        }
-        .meals-table tfoot td {
-            font-weight: bold;
-            border-bottom: none;
-        }
-        .meals-table tr.total td {
-            background-color: #222222;
-            color: #ffffff;
-        }
-        .meals-table tr.goal td {
-            background-color: #eeeeee;
-        }
-        .meals-table tr.left td {
-            background-color: #c62828;
-            color: #ffffff;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-    <header>
-        <img src="images/Logo.png" alt="MacrOman logo" id="logo" />
-        <span class="site-name">MacrOman</span>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="log-food.html">Log Food</a></li>
-                <li><a href="food-database.html">Food Database</a></li>
-                <li><a href="progress.html">Progress</a></li>
-                <li><a href="goals.html">Goals &amp; Profile</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="register.html">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <div class="container-fluid px-lg-4">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/Logo.png" alt="MacrOman logo" width="40" class="me-2" />
+                MacrOman
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-xl-center">
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap active" aria-current="page" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="log-food.html">Log Food</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="food-database.html">Food Database</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="progress.html">Progress</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="goals.html">Goals &amp; Profile</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="calculate.html">Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="questionnaire.html">Feedback</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="funpage.html">Fun</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="btn btn-danger btn-sm ms-xl-2" href="register.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <section class="hero"></section>
-
-    <main>
+    <main class="container my-4 flex-grow-1">
         <h1>Today&rsquo;s Dashboard</h1>
         <p class="intro">Sunday, 25 October 2026 &mdash; here is how today compares with your daily goals.</p>
 
@@ -93,16 +53,16 @@
         <p>Each bar shows the share of today&rsquo;s target you have already eaten.</p>
 
         <div class="goal-label"><span>Calories</span><span>74%</span></div>
-        <div class="bar"><div class="bar-fill" style="width: 74%; background-color: #c62828;"></div></div>
+        <div class="bar"><div class="bar-fill"></div></div>
 
         <div class="goal-label"><span>Protein</span><span>57%</span></div>
-        <div class="bar"><div class="bar-fill" style="width: 57%;"></div></div>
+        <div class="bar"><div class="bar-fill"></div></div>
 
         <div class="goal-label"><span>Carbohydrates</span><span>91%</span></div>
-        <div class="bar"><div class="bar-fill" style="width: 91%;"></div></div>
+        <div class="bar"><div class="bar-fill"></div></div>
 
         <div class="goal-label"><span>Fats</span><span>60%</span></div>
-        <div class="bar"><div class="bar-fill" style="width: 60%;"></div></div>
+        <div class="bar"><div class="bar-fill"></div></div>
 
         <h2>Meals eaten today</h2>
         <p>Your logged meals, grouped by mealtime.</p>
@@ -211,11 +171,13 @@
         <p class="cta">
             You still have <strong>59 g of protein</strong> left today. Want to change your targets? Visit <a href="goals.html">Goals &amp; Profile</a>.
         </p>
+    
     </main>
 
-    <footer>
-        <p>&copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University</p>
+    <footer class="bg-dark text-white text-center py-3">
+        &copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
