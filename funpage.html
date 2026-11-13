@@ -5,8 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | Fun Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script>
+        // constructor for one dish with its name and protein in grams
+        function Dish(name, protein) {
+            this.name = name;
+            this.protein = protein;
+        }
+
+        // the dishes used in the game (values from our food database)
+        var dishes = [
+            new Dish("Omani Shuwa", 42),
+            new Dish("Chicken Majboos", 38),
+            new Dish("Harees", 25),
+            new Dish("Laban", 6),
+            new Dish("Karak Tea", 3),
+            new Dish("Khalas Dates", 1),
+            new Dish("Omani Bread with Honey", 6)
+        ];
+
+        // each round compares two dishes by their index in the dishes array
+        var rounds = [[0, 1], [2, 3], [4, 6], [5, 3], [1, 2]];
+
+        var round = 0;   // current round number starting from 0
+        var score = 0;   // number of correct answers
+
+        // shows the two dishes of the current round on the buttons
+        // and hides the feedback and the next button until the user answers
+        function showRound() {
+            var pair = rounds[round];
+            document.getElementById("leftBtn").innerHTML = dishes[pair[0]].name;
+            document.getElementById("rightBtn").innerHTML = dishes[pair[1]].name;
+            document.getElementById("leftBtn").disabled = false;
+            document.getElementById("rightBtn").disabled = false;
+            document.getElementById("roundText").innerHTML = "Round " + (round + 1) + " of " + rounds.length;
+            document.getElementById("feedback").style.display = "none";
+            document.getElementById("nextBtn").style.display = "none";
+        }
+
+        // called when the user clicks a dish (side is 0 for left and 1 for right)
+        // checks if the chosen dish has more protein then shows the result and updates the score
+        function choose(side) {
+            var pair = rounds[round];
+            var chosen = dishes[pair[side]];
+            var other = dishes[pair[1 - side]];
+            var feedback = document.getElementById("feedback");
+
+            if (chosen.protein > other.protein) {
+                score = score + 1;
+                feedback.className = "alert alert-success";
+                feedback.innerHTML = "Correct! " + chosen.name + " has " + chosen.protein + " g protein vs " + other.protein + " g";
+            } else {
+                feedback.className = "alert alert-danger";
+                feedback.innerHTML = "Not quite, " + other.name + " has " + other.protein + " g protein vs " + chosen.protein + " g";
+            }
+
+            // stop more clicks on this round and show the result
+            document.getElementById("leftBtn").disabled = true;
+            document.getElementById("rightBtn").disabled = true;
+            feedback.style.display = "block";
+            document.getElementById("nextBtn").style.display = "inline-block";
+            updateScore();
+        }
+
+        // writes the score and moves the progress bar to match the rounds played
+        function updateScore() {
+            document.getElementById("scoreText").innerHTML = "Score: " + score;
+            var bar = document.getElementById("gameBar");
+            bar.style.width = ((round + 1) / rounds.length * 100) + "%";
+        }
+
+        // goes to the next round or shows the final result after the last round
+        function nextRound() {
+            round = round + 1;
+            if (round < rounds.length) {
+                showRound();
+            } else {
+                document.getElementById("gameBox").style.display = "none";
+                document.getElementById("endBox").style.display = "block";
+                document.getElementById("finalText").innerHTML = "You got " + score + " out of " + rounds.length + " right";
+            }
+        }
+
+        // resets the round and score so the user can play again
+        function restartGame() {
+            round = 0;
+            score = 0;
+            document.getElementById("gameBar").style.width = "0%";
+            document.getElementById("scoreText").innerHTML = "Score: 0";
+            document.getElementById("endBox").style.display = "none";
+            document.getElementById("gameBox").style.display = "block";
+            showRound();
+        }
+
+        // runs when the page loads, hides the end box and starts round 1
+        function startGame() {
+            document.getElementById("endBox").style.display = "none";
+            showRound();
+        }
+    </script>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100" onload="startGame()">
 
     <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
@@ -39,8 +138,42 @@
     </nav>
 
     <main class="container my-4 flex-grow-1">
-        <h1>Fun Page</h1>
-        <!-- page content goes here -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-5 fw-bold">Which has more <span class="text-danger">protein</span>?</h1>
+                <p class="lead">Pick the dish you think has more protein per portion. Five rounds, see how many you get right!</p>
+
+                <!-- round number, score and progress through the game -->
+                <div class="d-flex justify-content-between mb-1">
+                    <span id="roundText" class="fw-bold"></span>
+                    <span id="scoreText" class="fw-bold text-danger">Score: 0</span>
+                </div>
+                <div class="progress mb-4">
+                    <div id="gameBar" class="progress-bar bg-danger"></div>
+                </div>
+
+                <!-- the two dishes to choose from -->
+                <div id="gameBox">
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm-6">
+                            <button id="leftBtn" type="button" class="btn btn-outline-dark btn-lg w-100 py-4" onclick="choose(0)"></button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button id="rightBtn" type="button" class="btn btn-outline-dark btn-lg w-100 py-4" onclick="choose(1)"></button>
+                        </div>
+                    </div>
+                    <div id="feedback" class="alert"></div>
+                    <button id="nextBtn" type="button" class="btn btn-danger" onclick="nextRound()">Next round</button>
+                </div>
+
+                <!-- shown at the end of the game -->
+                <div id="endBox" class="card border-danger p-4">
+                    <h2 class="text-danger">Game over</h2>
+                    <p id="finalText" class="lead"></p>
+                    <button type="button" class="btn btn-danger" onclick="restartGame()">Play again</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="bg-dark text-white text-center py-3">

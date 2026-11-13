@@ -5,8 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script>
+        //month names used to write the date in words
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July",
+                          "August", "September", "October", "November", "December"];
+
+        //current left position of the banner text in pixels
+        var bannerPos = 0;
+
+        //adds a leading zero so 7 becomes 07 for the clock
+        function twoDigits(n) {
+            if (n < 10) {
+                return "0" + n;
+            }
+            return "" + n;
+        }
+
+        //builds the welcome message with the current date and time
+        //then writes it inside the banner span using innerHTML
+        function updateBannerText() {
+            var now = new Date();
+            var dateText = now.getDate() + " " + monthNames[now.getMonth()] + " " + now.getFullYear();
+            var timeText = twoDigits(now.getHours()) + ":" + twoDigits(now.getMinutes()) + ":" + twoDigits(now.getSeconds());
+            document.getElementById("bannerText").innerHTML =
+                "Welcome to the MacrOman website! Today is " + dateText + ", and the time is " + timeText;
+        }
+
+        //moves the banner text 2 pixels to the right each call
+        //when the text leaves the box on the right it starts again from the left
+        function moveBanner() {
+            var text = document.getElementById("bannerText");
+            var box = document.getElementById("bannerBox");
+            bannerPos = bannerPos + 2;
+            if (bannerPos > box.offsetWidth) {
+                bannerPos = -text.offsetWidth;
+            }
+            text.style.left = bannerPos + "px";
+        }
+
+        //runs once when the page loads (body onload)
+        //updates the clock every second and moves the text every 20 ms
+        function startBanner() {
+            updateBannerText();
+            setInterval(updateBannerText, 1000);
+            setInterval(moveBanner, 20);
+        }
+    </script>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100" onload="startBanner()">
 
     <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
@@ -39,46 +86,148 @@
     </nav>
 
     <main class="container my-4 flex-grow-1">
-        <p>
-            MacrOman is your friendly website for tracking calories and macros.
-            Unlike big tracking apps, MacrOman includes local Omani and Gulf dishes,
-            so you can track the food you actually eat.
-        </p>
+        <!-- intro text on the left and photo gallery on the right -->
+        <div class="row align-items-center g-4 mb-5">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold">Macr<span class="text-danger">Oman</span></h1>
+                <p class="lead">
+                    Your friendly website for tracking calories and macros. Unlike big tracking apps,
+                    MacrOman includes local Omani and Gulf dishes, so you can track the food you actually eat.
+                </p>
+                <a href="register.html" class="btn btn-danger btn-lg me-2">Get started</a>
+                <a href="food-database.html" class="btn btn-outline-dark btn-lg">Browse foods</a>
+            </div>
 
-        <h2>Why MacrOman?</h2>
-        <ul>
-            <li><strong>Local Foods:        </strong> Omani and Gulf dishes with verified macros.               </li>
-            <li><strong>Quick Logging:      </strong> Log your meal in a few taps.                              </li>
-            <li><strong>Track Your Goals:   </strong> Set daily calorie and protein goals and see your progress.</li>
-            <li><strong>Mobile Friendly:    </strong> Use it easily from your phone, at home or at the gym.     </li>
-        </ul>
+            <!-- bootstrap carousel changes the photo every 3 seconds (data-bs-interval) -->
+            <div class="col-lg-6">
+                <div id="foodGallery" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#foodGallery" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#foodGallery" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#foodGallery" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner rounded shadow">
+                        <div class="carousel-item active">
+                            <img src="images/food.jpg" class="d-block w-100" alt="A plate of traditional Omani food" />
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Omani-food.png" class="d-block w-100" alt="Traditional Omani shuwa" />
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Banner.png" class="d-block w-100" alt="MacrOman banner" />
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#foodGallery" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#foodGallery" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        <img src="images/food.jpg" alt="A plate of traditional Omani food" class="home-image" />
+        <!-- four feature cards -->
+        <h2 class="mb-3">Why MacrOman?</h2>
+        <div class="row g-3 mb-5">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Local Foods</h5>
+                        <p class="card-text">Omani and Gulf dishes with verified macros.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Quick Logging</h5>
+                        <p class="card-text">Log your meal in a few taps.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Track Your Goals</h5>
+                        <p class="card-text">Set daily calorie and protein goals and see your progress.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Mobile Friendly</h5>
+                        <p class="card-text">Use it easily from your phone, at home or at the gym.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h2>How It Works:</h2>
-        <ol>
-            <li><a href="register.html">Create your free account</a>.</li>
-            <li>Set your daily targets on the <a href="goals.html">Goals &amp; Profile</a> page.</li>
-            <li>Search the <a href="food-database.html">Food Database</a> and <a href="log-food.html">log your meals</a>.</li>
-            <li>Watch your <a href="progress.html">progress</a> grow day by day.</li>
-        </ol>
+        <!-- how it works and what you can track side by side -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-7">
+                <h2 class="mb-3">How It Works</h2>
+                <ol class="list-group list-group-numbered">
+                    <li class="list-group-item"><a href="register.html">Create your free account</a></li>
+                    <li class="list-group-item">Set your daily targets on the <a href="goals.html">Goals &amp; Profile</a> page</li>
+                    <li class="list-group-item">Search the <a href="food-database.html">Food Database</a> and <a href="log-food.html">log your meals</a></li>
+                    <li class="list-group-item">Watch your <a href="progress.html">progress</a> grow day by day</li>
+                </ol>
+            </div>
+            <div class="col-md-5">
+                <h2 class="mb-3">What You Can Track</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Calories (kcal)</li>
+                    <li class="list-group-item">Protein (g)</li>
+                    <li class="list-group-item">Carbohydrates (g)</li>
+                    <li class="list-group-item">Fats (g)</li>
+                </ul>
+            </div>
+        </div>
 
-        <h2>What You Can Track</h2>
-        <p>Every food in MacrOman shows the four numbers that matter most:</p>
-        <ul>
-            <li>Calories (kcal)</li>
-            <li>Protein (g)</li>
-            <li>Carbohydrates (g)</li>
-            <li>Fats (g)</li>
-        </ul>
+        <!-- direct links to the three new pages -->
+        <h2 class="mb-3">Try Something New</h2>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Calorie Calculator</h5>
+                        <p class="card-text">Find your daily calories and macros from your age, weight and activity.</p>
+                        <a href="calculate.html" class="btn btn-danger">Open calculator</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Feedback Questionnaire</h5>
+                        <p class="card-text">Tell us what you think and help us improve MacrOman.</p>
+                        <a href="questionnaire.html" class="btn btn-danger">Give feedback</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Fun Page</h5>
+                        <p class="card-text">Play &ldquo;Which has more protein?&rdquo; with local dishes.</p>
+                        <a href="funpage.html" class="btn btn-danger">Play now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <p class="cta">
-            Ready to start? <a href="register.html">Join MacrOman today</a>
-            or <a href="about.html">learn more about us</a>.
-        </p>
-
-    
+        <div class="alert alert-danger">
+            Ready to start? <a href="register.html" class="alert-link">Join MacrOman today</a>
+            or <a href="about.html" class="alert-link">learn more about us</a>.
+        </div>
     </main>
+
+    <!-- moving welcome banner with the live date and time -->
+    <div id="bannerBox" class="bg-danger text-white py-2 overflow-hidden">
+        <span id="bannerText" class="d-inline-block text-nowrap position-relative fw-bold"></span>
+    </div>
 
     <footer class="bg-dark text-white text-center py-3">
         &copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University
