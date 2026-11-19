@@ -5,20 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | Log Food</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body class="d-flex flex-column min-vh-100">
 
-    <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
+    <script>
+
+
+        function enableValidation() {
+
+            var forms = document.querySelectorAll(".needs-validation");
+
+            for (var i = 0; i < forms.length; i++) {
+
+                forms[i].addEventListener("submit", function (event) {
+                    if (!this.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    this.classList.add("was-validated");
+                });
+            }
+        }
+    </script>
+
+
+
+</head>
+<body class="d-flex flex-column min-vh-100" onload="enableValidation()">
+
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+
         <div class="container-fluid px-lg-4">
+
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="images/Logo.png" alt="MacrOman logo" width="40" class="me-2" />
                 MacrOman
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ms-auto align-items-xl-center">
                     <li class="nav-item"><a class="nav-link text-nowrap" href="index.html">Home</a></li>
@@ -39,67 +66,87 @@
     </nav>
 
     <main class="container my-4 flex-grow-1">
-        <h1>Log Your Meal</h1>
-        <p class="intro">
+
+        <h1 class="display-5 fw-bold">Log Your Meal</h1>
+
+        <p class="lead mb-4">
             Record what you eat to keep your daily calorie and macronutrient progress up to date.
         </p>
 
-        <form action="https://httpbin.org/get" method="get">
-            <input type="hidden" name="form_type" value="log_meal" />
+        <div class="row g-4">
 
-            <fieldset>
-                <legend>Meal Details</legend>
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="log_date" class="required">Date</label>
-                        <input type="date" id="log_date" name="log_date" value="2026-10-25" required />
-                    </div>
+            <div class="col-lg-7">
 
-                    <div class="field">
-                        <label for="meal_type" class="required">Meal Type</label>
-                        <select id="meal_type" name="meal_type" required>
-                            <option value="">-- Select mealtime --</option>
-                            <option value="breakfast">Breakfast</option>
-                            <option value="lunch">Lunch</option>
-                            <option value="dinner">Dinner</option>
-                            <option value="snack">Snack</option>
-                        </select>
-                    </div>
+                <div class="card shadow-sm">
 
-                    <div class="field">
-                        <label for="food_select" class="required">Select Food</label>
-                        <select id="food_select" name="food_item" required>
-                            <option value="">-- Choose from database --</option>
-                            <option value="shuwa">Omani Shuwa</option>
-                            <option value="majboos">Chicken Majboos</option>
-                            <option value="harees">Harees</option>
-                            <option value="rakhal">Omani Bread (Rakhal) with Honey</option>
-                            <option value="karak">Karak Tea</option>
-                            <option value="dates">Khalas Dates</option>
-                            <option value="laban">Laban</option>
-                        </select>
-                    </div>
+                    <div class="card-body p-4">
 
-                    <div class="field">
-                        <label for="servings" class="required">Number of Portions</label>
-                        <input type="number" id="servings" name="servings" min="0.5" max="10" step="0.5" value="1" required />
+                        <h2 class="h4 text-danger mb-3">Meal Details</h2>
+
+                        <form action="https://httpbin.org/get" method="get" class="needs-validation" novalidate>
+                            <input type="hidden" name="form_type" value="log_meal" />
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="log_date" class="form-label fw-bold">Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="log_date" name="log_date" value="2026-10-25" required />
+                                    <div class="invalid-feedback">Please select a date.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="meal_type" class="form-label fw-bold">Meal Type <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="meal_type" name="meal_type" required>
+                                        <option value="">-- Select mealtime --</option>
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="lunch">Lunch</option>
+                                        <option value="dinner">Dinner</option>
+                                        <option value="snack">Snack</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please choose a mealtime.</div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <label for="food_select" class="form-label fw-bold">Select Food <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="food_select" name="food_item" required>
+                                        <option value="">-- Choose from database --</option>
+                                        <option value="shuwa">Omani Shuwa</option>
+                                        <option value="majboos">Chicken Majboos</option>
+                                        <option value="harees">Harees</option>
+                                        <option value="rakhal">Omani Bread (Rakhal) with Honey</option>
+                                        <option value="karak">Karak Tea</option>
+                                        <option value="dates">Khalas Dates</option>
+                                        <option value="laban">Laban</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a dish from the list.</div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="servings" class="form-label fw-bold">Portions <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="servings" name="servings" min="0.5" max="10" step="0.5" value="1" required />
+                                    <div class="invalid-feedback">Enter portions (0.5 to 10).</div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger me-2">Add Meal to Log</button>
+                            <button type="reset" class="btn btn-outline-secondary">Reset Form</button>
+                        </form>
                     </div>
                 </div>
+            </div>
 
-                <div class="buttons">
-                    <input type="submit" value="Add Meal to Log" />
-                    <input type="reset" value="Reset Form" />
+            <div class="col-lg-5">
+                <div class="card border-danger h-100">
+                    <div class="card-body p-4">
+                        <h2 class="h4 text-danger mb-3">Quick Tips for Logging</h2>
+                        <ul class="mb-0">
+                            <li class="mb-2">Be accurate with portion sizes (e.g., 1 plate vs 0.5 plate).</li>
+                            <li class="mb-2">If you can't find your dish, search the <a href="food-database.html">Food Database</a> first.</li>
+                            <li>Once logged, check your updated totals on the <a href="dashboard.html">Dashboard</a>.</li>
+                        </ul>
+                    </div>
                 </div>
-            </fieldset>
-        </form>
-
-        <h2>Quick Tips for Logging</h2>
-        <ul>
-            <li>Be accurate with portion sizes (e.g., 1 plate vs 0.5 plate).</li>
-            <li>If you can't find your dish, search the <a href="food-database.html">Food Database</a> first.</li>
-            <li>Once logged, check your updated totals on the <a href="dashboard.html">Dashboard</a>.</li>
-        </ul>
-    
+            </div>
+        </div>
     </main>
 
     <footer class="bg-dark text-white text-center py-3">

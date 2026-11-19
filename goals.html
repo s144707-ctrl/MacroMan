@@ -5,20 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | Goals &amp; Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body class="d-flex flex-column min-vh-100">
 
-    <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
+    <script>
+        function enableValidation() {
+
+            var forms = document.querySelectorAll(".needs-validation");
+
+            for (var i = 0; i < forms.length; i++) {
+
+                forms[i].addEventListener("submit", function (event) {
+                    if (!this.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    this.classList.add("was-validated");
+                });
+            }
+        }
+    </script>
+</head>
+<body class="d-flex flex-column min-vh-100" onload="enableValidation()">
+
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+
         <div class="container-fluid px-lg-4">
+
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="images/Logo.png" alt="MacrOman logo" width="40" class="me-2" />
                 MacrOman
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ms-auto align-items-xl-center">
                     <li class="nav-item"><a class="nav-link text-nowrap" href="index.html">Home</a></li>
@@ -39,112 +60,140 @@
     </nav>
 
     <main class="container my-4 flex-grow-1">
-        <h1>Goals &amp; Profile</h1>
-        <p class="intro">
+
+        <h1 class="display-5 fw-bold">Goals &amp; Profile</h1>
+        <p class="lead mb-4">
             Tell us about yourself and set your daily targets. Your dashboard and progress pages compare what you eat against these numbers.
         </p>
 
-        <form action="https://httpbin.org/get" method="get">
+        <form action="https://httpbin.org/get" method="get" class="needs-validation" novalidate>
             <input type="hidden" name="user_id" value="MO-1024" />
             <input type="hidden" name="form_type" value="goals" />
 
-            <div class="form-grid">
+            <div class="row g-4 mb-4">
 
-                <fieldset>
-                    <legend>Your profile</legend>
+                <!-- Left column: Your Profile -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h2 class="h4 text-danger mb-3">Your Profile</h2>
 
-                    <div class="field">
-                        <label for="photo">Profile photo</label>
-                        <input type="file" id="photo" name="profile_photo" accept="image/png, image/jpeg" />
-                        <span class="hint">PNG or JPG</span>
+                            <div class="mb-3">
+                                <label for="photo" class="form-label fw-bold">Profile photo</label>
+                                <input type="file" class="form-control" id="photo" name="profile_photo" accept="image/png, image/jpeg" />
+                                <div class="form-text">PNG or JPG</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="age" class="form-label fw-bold">Age (years) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="age" name="age" min="13" max="90" placeholder="21" required />
+                                <div class="invalid-feedback">Please enter an age between 13 and 90.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="height" class="form-label fw-bold">Height (cm) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="height" name="height_cm" min="120" max="230" placeholder="172" required />
+                                <div class="invalid-feedback">Please enter a height between 120 and 230 cm.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="weight" class="form-label fw-bold">Current weight (kg) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="weight" name="weight_kg" min="30" max="250" step="0.1" placeholder="78.5" required />
+                                <div class="invalid-feedback">Please enter a weight between 30 and 250 kg.</div>
+                            </div>
+
+                            <div class="mb-0">
+                                <label for="activity" class="form-label fw-bold">Activity level <span class="text-danger">*</span></label>
+                                <select class="form-select" id="activity" name="activity_level" required>
+                                    <option value="sedentary">Little or no exercise</option>
+                                    <option value="light">Light: 1&ndash;3 days a week</option>
+                                    <option value="moderate" selected>Moderate: 3&ndash;5 days a week</option>
+                                    <option value="active">Very active: 6&ndash;7 days a week</option>
+                                </select>
+                                <div class="invalid-feedback">Please choose your activity level.</div>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="field">
-                        <label for="age" class="required">Age (years)</label>
-                        <input type="number" id="age" name="age" min="13" max="90" placeholder="21" required />
+                <div class="col-lg-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h2 class="h4 text-danger mb-3">Daily Targets</h2>
+
+                            <div class="mb-3">
+                                <label for="goal_type" class="form-label fw-bold">Main goal <span class="text-danger">*</span></label>
+                                <select class="form-select" id="goal_type" name="goal_type" required>
+                                    <option value="lose">Lose weight</option>
+                                    <option value="maintain" selected>Maintain weight</option>
+                                    <option value="gain">Gain muscle</option>
+                                </select>
+                                <div class="invalid-feedback">Please choose your main goal.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="calories" class="form-label fw-bold">Calories per day (kcal) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="calories" name="daily_calories" min="1200" max="4500" step="50" value="2200" required />
+                                <div class="invalid-feedback">Please enter daily calories between 1,200 and 4,500 kcal.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="protein_pct" class="form-label fw-bold">Protein share of calories</label>
+                                <input type="range" class="form-range" id="protein_pct" name="protein_percent" min="10" max="40" step="5" value="25" />
+                                <div class="d-flex justify-content-between small text-muted">
+                                    <span>10%</span><span>25%</span><span>40%</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="carbs_pct" class="form-label fw-bold">Carbohydrate share of calories</label>
+                                <input type="range" class="form-range" id="carbs_pct" name="carbs_percent" min="30" max="65" step="5" value="45" />
+                                <div class="d-flex justify-content-between small text-muted">
+                                    <span>30%</span><span>45%</span><span>65%</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-0">
+                                <label for="fat_pct" class="form-label fw-bold">Fat share of calories</label>
+                                <input type="range" class="form-range" id="fat_pct" name="fat_percent" min="15" max="40" step="5" value="30" />
+                                <div class="d-flex justify-content-between small text-muted">
+                                    <span>15%</span><span>30%</span><span>40%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="field">
-                        <label for="height" class="required">Height (cm)</label>
-                        <input type="number" id="height" name="height_cm" min="120" max="230" placeholder="172" required />
-                    </div>
-
-                    <div class="field">
-                        <label for="weight" class="required">Current weight (kg)</label>
-                        <input type="number" id="weight" name="weight_kg" min="30" max="250" step="0.1" placeholder="78.5" required />
-                    </div>
-
-                    <div class="field">
-                        <label for="activity" class="required">Activity level</label>
-                        <select id="activity" name="activity_level" required>
-                            <option value="sedentary">Little or no exercise</option>
-                            <option value="light">Light: 1&ndash;3 days a week</option>
-                            <option value="moderate" selected>Moderate: 3&ndash;5 days a week</option>
-                            <option value="active">Very active: 6&ndash;7 days a week</option>
-                        </select>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Daily targets</legend>
-
-                    <div class="field">
-                        <label for="goal_type" class="required">Main goal</label>
-                        <select id="goal_type" name="goal_type" required>
-                            <option value="lose">Lose weight</option>
-                            <option value="maintain" selected>Maintain weight</option>
-                            <option value="gain">Gain muscle</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label for="calories" class="required">Calories per day (kcal)</label>
-                        <input type="number" id="calories" name="daily_calories" min="1200" max="4500" step="50" value="2200" required />
-                    </div>
-
-                    <div class="field">
-                        <label for="protein_pct">Protein share of calories</label>
-                        <input type="range" id="protein_pct" name="protein_percent" min="10" max="40" step="5" value="25" />
-                        <div class="range-scale"><span>10%</span><span>25%</span><span>40%</span></div>
-                    </div>
-
-                    <div class="field">
-                        <label for="carbs_pct">Carbohydrate share of calories</label>
-                        <input type="range" id="carbs_pct" name="carbs_percent" min="30" max="65" step="5" value="45" />
-                        <div class="range-scale"><span>30%</span><span>45%</span><span>65%</span></div>
-                    </div>
-
-                    <div class="field">
-                        <label for="fat_pct">Fat share of calories</label>
-                        <input type="range" id="fat_pct" name="fat_percent" min="15" max="40" step="5" value="30" />
-                        <div class="range-scale"><span>15%</span><span>30%</span><span>40%</span></div>
-                    </div>
-                </fieldset>
+                </div>
 
             </div>
 
-            <fieldset>
-                <legend>Food notes</legend>
-                <div class="field">
-                    <label for="notes">Foods you avoid or anything we should know</label>
-                    <textarea id="notes" name="diet_notes" rows="4" placeholder="e.g. No seafood, I fast on Mondays and Thursdays"></textarea>
-                </div>
+            <div class="card shadow-sm mb-4">
 
-                <div class="buttons">
-                    <input type="submit" value="Save goals" />
-                    <input type="reset" value="Reset" />
-                    <input type="button" value="Preview" />
+                <div class="card-body p-4">
+
+                    <h2 class="h4 text-danger mb-3">Food Notes</h2>
+                    
+                    <div class="mb-4">
+                        <label for="notes" class="form-label fw-bold">Foods you avoid or anything we should know</label>
+                        <textarea class="form-control" id="notes" name="diet_notes" rows="4" placeholder="e.g. No seafood, I fast on Mondays and Thursdays"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger me-2">Save goals</button>
+                    <button type="reset" class="btn btn-outline-secondary me-2">Reset</button>
+                    <a href="dashboard.html" class="btn btn-outline-dark">Preview Dashboard</a>
                 </div>
-            </fieldset>
+            </div>
         </form>
 
-        <h2>Not sure what to choose?</h2>
-        <ul>
-            <li>Most adults maintain their weight between 1,800 and 2,600 kcal a day, depending on size and activity.</li>
-            <li>If you train at the gym, a protein share of 25&ndash;30% is a common starting point.</li>
-            <li>You can change these targets at any time and your <a href="progress.html">progress</a> will update.</li>
-        </ul>
-    
+        <div class="card bg-light border-0">
+            <div class="card-body p-4">
+                <h2 class="h5 text-danger">Not sure what to choose?</h2>
+                <ul class="mb-0">
+                    <li class="mb-1">Most adults maintain their weight between 1,800 and 2,600 kcal a day, depending on size and activity.</li>
+                    <li class="mb-1">If you train at the gym, a protein share of 25&ndash;30% is a common starting point.</li>
+                    <li>You can change these targets at any time and your <a href="progress.html">progress</a> will update.</li>
+                </ul>
+            </div>
+        </div>
     </main>
 
     <footer class="bg-dark text-white text-center py-3">

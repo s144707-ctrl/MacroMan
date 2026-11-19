@@ -5,20 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MacrOman | Feedback</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body class="d-flex flex-column min-vh-100">
 
-    <!-- Responsive Bootstrap navbar: full menu on large screens, hamburger on small screens -->
+    <script>
+
+        function setFieldStatus(inputId, errorId, isValid, errorMessage) {
+
+            var input = document.getElementById(inputId);
+            var errorBox = document.getElementById(errorId);
+
+            if (isValid) {
+                input.classList.remove("is-invalid");
+                input.classList.add("is-valid");
+                errorBox.innerHTML = "";
+            } 
+            else {
+                input.classList.remove("is-valid");
+                input.classList.add("is-invalid");
+                errorBox.innerHTML = errorMessage;
+            }
+        }
+
+        function validateQuestionnaire(event) {
+
+            event.preventDefault(); 
+
+            var allValid = true;
+
+
+            var nameValue = document.getElementById("fb_name").value.trim();
+            var nameRegex = /^[A-Za-z]{2,}(\s+[A-Za-z]{2,})+$/;
+
+
+            if (nameRegex.test(nameValue)) {
+                setFieldStatus("fb_name", "nameError", true, "");
+            } 
+            else {
+                setFieldStatus("fb_name", "nameError", false, "Enter your first and last name using English letters only (e.g. Ahmed Alhinai).");
+                allValid = false;
+            }
+
+            var emailValue = document.getElementById("fb_email").value.trim();
+
+            var emailRegex = /^[A-Za-z0-9._-]+@(student\.)?squ\.edu\.om$/i;
+
+            if (emailRegex.test(emailValue)) {
+                setFieldStatus("fb_email", "emailError", true, "");
+            } 
+            
+            else {
+                setFieldStatus("fb_email", "emailError", false, "Please enter a valid SQU email (e.g. s144707@student.squ.edu.om or user@squ.edu.om).");
+                allValid = false;
+            }
+
+            var phoneValue = document.getElementById("fb_phone").value.trim();
+            var phoneRegex = /^(\+968\s?)?[79][0-9]{7}$/;
+
+
+            if (phoneRegex.test(phoneValue)) {
+                setFieldStatus("fb_phone", "phoneError", true, "");
+            } 
+            else {
+                setFieldStatus("fb_phone", "phoneError", false, "Enter a valid 8-digit Omani mobile number starting with 9 or 7 (e.g. 91234567 or +968 91234567).");
+                allValid = false;
+            }
+
+            var roleValue = document.getElementById("fb_role").value;
+            if (roleValue !== "") {
+                setFieldStatus("fb_role", "roleError", true, "");
+            } 
+            else {
+                setFieldStatus("fb_role", "roleError", false, "Please select your role at SQU.");
+                allValid = false;
+            }
+
+            var ratingRadios = document.getElementsByName("satisfaction");
+            var selectedRating = "";
+
+            for (var i = 0; i < ratingRadios.length; i++) {
+                if (ratingRadios[i].checked) {
+                    selectedRating = ratingRadios[i].value;
+                }
+            }
+
+            var ratingError = document.getElementById("ratingError");
+            if (selectedRating !== "") {
+                ratingError.style.display = "none";
+            } 
+            
+            else {
+                ratingError.style.display = "block";
+                allValid = false;
+            }
+
+            var commentsValue = document.getElementById("fb_comments").value.trim();
+            
+            if (commentsValue.length >= 10) {
+                setFieldStatus("fb_comments", "commentsError", true, "");
+            } 
+            else {
+                setFieldStatus("fb_comments", "commentsError", false, "Please write at least 10 characters of feedback.");
+                allValid = false;
+            }
+
+            var resultBox = document.getElementById("submitResult");
+            
+            if (allValid) {
+                resultBox.className = "alert alert-success mt-4";
+                resultBox.innerHTML = "<strong>Thank you, " + nameValue + "!</strong> Your feedback (" + selectedRating + ") has been submitted successfully.";
+                resultBox.style.display = "block";
+            } 
+            
+            else {
+                resultBox.style.display = "none";
+            }
+
+            return false;
+        }
+
+        function resetQuestionnaire() {
+            
+            var ids = ["fb_name", "fb_email", "fb_phone", "fb_role", "fb_comments"];
+            
+            for (var i = 0; i < ids.length; i++) {
+                var el = document.getElementById(ids[i]);
+                el.classList.remove("is-valid");
+                el.classList.remove("is-invalid");
+            }
+
+
+            document.getElementById("ratingError").style.display = "none";
+            document.getElementById("submitResult").style.display = "none";
+        }
+    </script>
+
+
+</head>
+<body class="d-flex flex-column min-vh-100" onload="resetQuestionnaire()">
+
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+
         <div class="container-fluid px-lg-4">
+
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="images/Logo.png" alt="MacrOman logo" width="40" class="me-2" />
                 MacrOman
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ms-auto align-items-xl-center">
                     <li class="nav-item"><a class="nav-link text-nowrap" href="index.html">Home</a></li>
@@ -39,8 +176,98 @@
     </nav>
 
     <main class="container my-4 flex-grow-1">
-        <h1>Feedback Questionnaire</h1>
-        <!-- page content goes here -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold">Feedback Questionnaire</h1>
+                <p class="lead mb-4">
+                    Help Team Prospects improve MacrOman by sharing your experience with our Omani nutrition tracker.
+                </p>
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <form id="questionnaireForm" onsubmit="return validateQuestionnaire(event)" onreset="resetQuestionnaire()" novalidate>
+
+                            <div class="mb-3">
+                                <label for="fb_name" class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fb_name" placeholder="e.g. Ahmed Alhinai" />
+                                <div id="nameError" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fb_email" class="form-label fw-bold">SQU Email <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fb_email" placeholder="e.g. s144707@student.squ.edu.om" />
+                                <div id="emailError" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fb_phone" class="form-label fw-bold">Omani Phone Number <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fb_phone" placeholder="e.g. 91234567 or +968 91234567" />
+                                <div id="phoneError" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fb_role" class="form-label fw-bold">Who are you? <span class="text-danger">*</span></label>
+                                <select class="form-select" id="fb_role">
+                                    <option value="">-- Choose your role --</option>
+                                    <option value="student">SQU Student</option>
+                                    <option value="faculty">SQU Faculty / Staff</option>
+                                    <option value="visitor">External Visitor</option>
+                                </select>
+                                <div id="roleError" class="invalid-feedback"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold d-block">How satisfied are you with MacrOman? <span class="text-danger">*</span></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="rate_excellent" value="Excellent" />
+                                    <label class="form-check-label" for="rate_excellent">Excellent</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="rate_good" value="Good" />
+                                    <label class="form-check-label" for="rate_good">Good</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="rate_average" value="Average" />
+                                    <label class="form-check-label" for="rate_average">Average</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="satisfaction" id="rate_poor" value="Needs Work" />
+                                    <label class="form-check-label" for="rate_poor">Needs Work</label>
+                                </div>
+                                <div id="ratingError" class="text-danger small mt-1 d-none">Please select a satisfaction rating.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold d-block">Which features did you enjoy most?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="feat_db" value="Omani Food Database" />
+                                    <label class="form-check-label" for="feat_db">Omani &amp; Gulf Food Database</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="feat_calc" value="Calorie Calculator" />
+                                    <label class="form-check-label" for="feat_calc">Daily Calorie &amp; Macro Calculator</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="feat_game" value="Protein Quiz Game" />
+                                    <label class="form-check-label" for="feat_game">Fun Protein Quiz Game</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="fb_comments" class="form-label fw-bold">Suggestions or Missing Omani Dishes <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="fb_comments" rows="4" placeholder="Tell us what we should add or improve..."></textarea>
+                                <div id="commentsError" class="invalid-feedback"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger me-2">Submit Feedback</button>
+                            <button type="reset" class="btn btn-outline-secondary">Clear Form</button>
+                        </form>
+
+                        <div id="submitResult" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="bg-dark text-white text-center py-3">
