@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MacrOman | Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script>
+
+        function initCalculator() {
+
+            document.getElementById("resultCard").style.display = "none";
+            document.getElementById("calcError").style.display = "none";
+        }
+
+        function calculateMacros(event) {
+
+            event.preventDefault(); 
+
+            var age = parseFloat(document.getElementById("calc_age").value);
+            var weight = parseFloat(document.getElementById("calc_weight").value);
+            var height = parseFloat(document.getElementById("calc_height").value);
+            var gender = document.getElementById("calc_gender").value;
+            var activity = parseFloat(document.getElementById("calc_activity").value);
+            var goal = document.getElementById("calc_goal").value;
+
+            var errorBox = document.getElementById("calcError");
+            var resultCard = document.getElementById("resultCard");
+
+            if (isNaN(age) || isNaN(weight) || isNaN(height) || age < 13 || age > 100 || weight < 30 || height < 120) {
+                errorBox.innerHTML = "Please enter valid numbers for age (13-100), weight (min 30 kg), and height (min 120 cm).";
+                errorBox.style.display = "block";
+                resultCard.style.display = "none";
+                return false;
+            }
+
+            errorBox.style.display = "none";
+
+            var bmr = 0;
+
+            if (gender === "male") {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } 
+            
+            else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            }
+
+            var tdee = bmr * activity;
+            var targetCalories = tdee;
+            var noteText = "";
+
+            if (goal === "lose" && age >= 60) {
+                targetCalories = tdee - 300;
+                noteText = "Applied a gentle 300 kcal deficit recommended for adults aged 60 and above.";
+            } 
+            
+            else if (goal === "lose" && age < 60) {
+                targetCalories = tdee - 500;
+                noteText = "Applied a standard 500 kcal daily deficit for steady weight loss.";
+            } 
+            
+            else if (goal === "gain" && (activity === 1.725 || activity === 1.9)) {
+                targetCalories = tdee + 400;
+                noteText = "Applied a +400 kcal surplus to support intense training and muscle gain.";
+            } 
+            
+            else if (goal === "gain") {
+                targetCalories = tdee + 250;
+                noteText = "Applied a +250 kcal lean surplus for gradual muscle gain.";
+            } 
+            else {
+                targetCalories = tdee;
+                noteText = "Calories set to match your daily maintenance energy expenditure.";
+            }
+
+            if (targetCalories < 1200) {
+                targetCalories = 1200;
+                noteText = noteText + " Adjusted up to the 1,200 kcal minimum safe daily intake.";
+            }
+
+            var proteinPct = 0.25;
+            var carbsPct = 0.45;
+            var fatPct = 0.30;
+
+            if (goal === "gain" || age >= 60) {
+                proteinPct = 0.30;
+                carbsPct = 0.45;
+                fatPct = 0.25;
+            } 
+            
+            else if (goal === "lose" && activity >= 1.55) {
+
+                proteinPct = 0.30;
+                carbsPct = 0.40;
+                fatPct = 0.30;
+            }
+
+
+            var proteinGrams = Math.round((targetCalories * proteinPct) / 4);
+            var carbsGrams = Math.round((targetCalories * carbsPct) / 4);
+            var fatGrams = Math.round((targetCalories * fatPct) / 9);
+
+
+            document.getElementById("outBmr").innerHTML = Math.round(bmr) + " kcal";
+            document.getElementById("outCalories").innerHTML = Math.round(targetCalories) + " kcal";
+            document.getElementById("outProtein").innerHTML = proteinGrams + " g";
+            document.getElementById("outCarbs").innerHTML = carbsGrams + " g";
+            document.getElementById("outFat").innerHTML = fatGrams + " g";
+            document.getElementById("outNote").innerHTML = noteText;
+
+            resultCard.style.display = "block";
+            return false;
+        }
+    </script>
+</head>
+<body class="d-flex flex-column min-vh-100" onload="initCalculator()">
+
+
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+
+        <div class="container-fluid px-lg-4">
+
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/Logo.png" alt="MacrOman logo" width="40" class="me-2" />
+                MacrOman
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-xl-center">
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="log-food.html">Log Food</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="food-database.html">Food Database</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="progress.html">Progress</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="goals.html">Goals &amp; Profile</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap active" aria-current="page" href="calculate.html">Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="questionnaire.html">Feedback</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="funpage.html">Fun</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link text-nowrap" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="btn btn-danger btn-sm ms-xl-2" href="register.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4 flex-grow-1">
+        <h1 class="display-5 fw-bold">Daily Calorie &amp; Macro Calculator</h1>
+        <p class="lead mb-4">
+            Enter your body measurements, activity level, and goal to calculate your personalized daily calories and macronutrient targets.
+        </p>
+
+        <div class="row g-4">
+
+            <div class="col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h4 text-danger mb-3">Your Details</h2>
+
+                        <div id="calcError" class="alert alert-danger" role="alert"></div>
+
+                        <form onsubmit="return calculateMacros(event)" onreset="initCalculator()">
+                            <div class="row g-3 mb-3">
+                                <div class="col-sm-6">
+                                    <label for="calc_gender" class="form-label fw-bold">Gender</label>
+                                    <select class="form-select" id="calc_gender">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="calc_age" class="form-label fw-bold">Age (years)</label>
+                                    <input type="number" class="form-control" id="calc_age" min="13" max="100" value="21" required />
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="calc_weight" class="form-label fw-bold">Weight (kg)</label>
+                                    <input type="number" class="form-control" id="calc_weight" min="30" max="250" step="0.5" value="75" required />
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="calc_height" class="form-label fw-bold">Height (cm)</label>
+                                    <input type="number" class="form-control" id="calc_height" min="120" max="230" value="175" required />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="calc_activity" class="form-label fw-bold">Activity Level</label>
+                                <select class="form-select" id="calc_activity">
+                                    <option value="1.2">Sedentary (little or no exercise)</option>
+                                    <option value="1.375">Lightly active (1&ndash;3 days/week)</option>
+                                    <option value="1.55" selected>Moderately active (3&ndash;5 days/week)</option>
+                                    <option value="1.725">Very active (6&ndash;7 days/week)</option>
+                                    <option value="1.9">Extra active (athlete / physical job)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="calc_goal" class="form-label fw-bold">Fitness Goal</label>
+                                <select class="form-select" id="calc_goal">
+                                    <option value="lose">Lose Weight</option>
+                                    <option value="maintain" selected>Maintain Weight</option>
+                                    <option value="gain">Gain Muscle</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger me-2">Calculate Targets</button>
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div id="resultCard" class="card border-danger shadow-sm">
+                    <div class="card-header bg-dark text-white fw-bold">
+                        Your Daily Nutrition Targets
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3 text-center mb-3">
+                            <div class="col-6">
+                                <div class="p-3 bg-light rounded">
+                                    <div class="small text-muted">Resting BMR</div>
+                                    <div id="outBmr" class="h4 fw-bold text-dark mb-0">0 kcal</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-danger text-white rounded">
+                                    <div class="small">Daily Target</div>
+                                    <div id="outCalories" class="h4 fw-bold mb-0">0 kcal</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="h6 text-danger fw-bold mb-2">Recommended Daily Macros</h3>
+                        <div class="row g-2 text-center mb-3">
+                            <div class="col-4">
+                                <div class="border rounded p-2">
+                                    <div class="small text-muted">Protein</div>
+                                    <div id="outProtein" class="h5 fw-bold mb-0">0 g</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border rounded p-2">
+                                    <div class="small text-muted">Carbs</div>
+                                    <div id="outCarbs" class="h5 fw-bold mb-0">0 g</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border rounded p-2">
+                                    <div class="small text-muted">Fats</div>
+                                    <div id="outFat" class="h5 fw-bold mb-0">0 g</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="outNote" class="alert alert-secondary small mb-3"></div>
+                        <a href="goals.html" class="btn btn-outline-danger btn-sm">Save these numbers in Goals &amp; Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3">
+        &copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
