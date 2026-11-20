@@ -8,12 +8,16 @@
 
     <script>
 
+        // runs when the page loads and when the form is reset
+        // hides the result card and the error message
         function initCalculator() {
 
             document.getElementById("resultCard").style.display = "none";
             document.getElementById("calcError").style.display = "none";
         }
 
+        // runs when the form is submitted
+        // works out the BMR, daily calories and macros from the inputs and shows them
         function calculateMacros(event) {
 
             event.preventDefault(); 
@@ -28,6 +32,7 @@
             var errorBox = document.getElementById("calcError");
             var resultCard = document.getElementById("resultCard");
 
+            // stop and show an error if a number is missing or out of range
             if (isNaN(age) || isNaN(weight) || isNaN(height) || age < 13 || age > 100 || weight < 30 || height < 120) {
                 errorBox.innerHTML = "Please enter valid numbers for age (13-100), weight (min 30 kg), and height (min 120 cm).";
                 errorBox.style.display = "block";
@@ -37,6 +42,7 @@
 
             errorBox.style.display = "none";
 
+            // BMR using the Mifflin St Jeor equation, the last number is different for male and female
             var bmr = 0;
 
             if (gender === "male") {
@@ -51,6 +57,7 @@
             var targetCalories = tdee;
             var noteText = "";
 
+            // change the calories based on the goal and age using && and ||
             if (goal === "lose" && age >= 60) {
                 targetCalories = tdee - 300;
                 noteText = "Applied a gentle 300 kcal deficit recommended for adults aged 60 and above.";
@@ -103,6 +110,7 @@
             var fatGrams = Math.round((targetCalories * fatPct) / 9);
 
 
+            // write the results inside the result card and show it
             document.getElementById("outBmr").innerHTML = Math.round(bmr) + " kcal";
             document.getElementById("outCalories").innerHTML = Math.round(targetCalories) + " kcal";
             document.getElementById("outProtein").innerHTML = proteinGrams + " g";

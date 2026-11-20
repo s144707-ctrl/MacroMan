@@ -7,14 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <script>
-        //month names used to write the date in words
+        // month names used to write the date in words
         var monthNames = ["January", "February", "March", "April", "May", "June", "July",
                           "August", "September", "October", "November", "December"];
 
-        //current left position of the banner text in pixels
+        // current left position of the banner text in pixels
         var bannerPos = 0;
 
-        //adds a leading zero so 7 becomes 07 for the clock
+        // adds a leading zero so 7 becomes 07 for the clock
         function twoDigits(n) {
             if (n < 10) {
                 return "0" + n;
@@ -22,8 +22,8 @@
             return "" + n;
         }
 
-        //builds the welcome message with the current date and time
-        //then writes it inside the banner span using innerHTML
+        // builds the welcome message with the current date and time
+        // then writes it inside the banner span using innerHTML
         function updateBannerText() {
             var now = new Date();
             var dateText = now.getDate() + " " + monthNames[now.getMonth()] + " " + now.getFullYear();
@@ -32,8 +32,8 @@
                 "Welcome to the MacrOman website! Today is " + dateText + ", and the time is " + timeText;
         }
 
-        //moves the banner text 2 pixels to the right each call
-        //when the text leaves the box on the right it starts again from the left
+        // moves the banner text 2 pixels to the right each call
+        // when the text leaves the box on the right it starts again from the left
         function moveBanner() {
             var text = document.getElementById("bannerText");
             var box = document.getElementById("bannerBox");
@@ -44,8 +44,8 @@
             text.style.left = bannerPos + "px";
         }
 
-        //runs once when the page loads (body onload)
-        //updates the clock every second and moves the text every 20 ms
+        // runs once when the page loads (body onload)
+        // updates the clock every second and moves the text every 20 ms
         function startBanner() {
             updateBannerText();
             setInterval(updateBannerText, 1000);

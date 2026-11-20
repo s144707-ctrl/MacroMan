@@ -8,6 +8,8 @@
 
     <script>
 
+        // shows bootstrap feedback on one field
+        // if isValid is true the field turns green, otherwise it turns red and shows the error message
         function setFieldStatus(inputId, errorId, isValid, errorMessage) {
 
             var input = document.getElementById(inputId);
@@ -25,6 +27,8 @@
             }
         }
 
+        // runs when the form is submitted
+        // checks every field and shows the thank you message only if all of them are valid
         function validateQuestionnaire(event) {
 
             event.preventDefault(); 
@@ -32,6 +36,7 @@
             var allValid = true;
 
 
+            // name regex: first and last name, letters only, at least 2 letters each
             var nameValue = document.getElementById("fb_name").value.trim();
             var nameRegex = /^[A-Za-z]{2,}(\s+[A-Za-z]{2,})+$/;
 
@@ -44,6 +49,7 @@
                 allValid = false;
             }
 
+            // email regex: must end with squ.edu.om or student.squ.edu.om
             var emailValue = document.getElementById("fb_email").value.trim();
 
             var emailRegex = /^[A-Za-z0-9._-]+@(student\.)?squ\.edu\.om$/i;
@@ -57,6 +63,7 @@
                 allValid = false;
             }
 
+            // phone regex: 8 digits starting with 7 or 9 with an optional +968 at the start
             var phoneValue = document.getElementById("fb_phone").value.trim();
             var phoneRegex = /^(\+968\s?)?[79][0-9]{7}$/;
 
@@ -107,6 +114,7 @@
                 allValid = false;
             }
 
+            // show the success message only when every check passed
             var resultBox = document.getElementById("submitResult");
             
             if (allValid) {
@@ -122,6 +130,8 @@
             return false;
         }
 
+        // runs when the page loads and when the form is reset
+        // removes the green and red feedback and hides the messages
         function resetQuestionnaire() {
             
             var ids = ["fb_name", "fb_email", "fb_phone", "fb_role", "fb_comments"];
@@ -234,7 +244,7 @@
                                     <input class="form-check-input" type="radio" name="satisfaction" id="rate_poor" value="Needs Work" />
                                     <label class="form-check-label" for="rate_poor">Needs Work</label>
                                 </div>
-                                <div id="ratingError" class="text-danger small mt-1 d-none">Please select a satisfaction rating.</div>
+                                <div id="ratingError" class="text-danger small mt-1">Please select a satisfaction rating.</div>
                             </div>
 
                             <div class="mb-3">
