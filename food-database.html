@@ -39,136 +39,156 @@
     </nav>
 
     <main class="container my-4 flex-grow-1">
-        <h1>Omani &amp; Gulf Food Database</h1>
-        <p class="intro">
-            Search nutritional values for verified local Omani dishes, Gulf specialties, and everyday foods.
+        <h1 class="display-5 fw-bold">Omani &amp; Gulf Food Database</h1>
+        <p class="lead">
+            Search nutritional values for local Omani dishes, Gulf specialties, and everyday foods &mdash; or add a dish that is missing.
         </p>
 
-        <form action="#" method="get">
-            <fieldset>
-                <legend>Search &amp; Filter Database</legend>
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="search_query">Search food name</label>
-                        <input type="text" id="search_query" name="query" placeholder="e.g. Shuwa, Harees, Majboos..." />
+        <div class="row g-4 mb-4">
+            <!-- Search (filter) form -->
+            <div class="col-lg-7">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-dark text-white fw-semibold">Search &amp; Filter Database</div>
+                    <div class="card-body">
+                        <form id="searchForm">
+                            <div class="row g-3">
+                                <div class="col-md-7">
+                                    <label for="searchQuery" class="form-label">Food name</label>
+                                    <input type="text" class="form-control" id="searchQuery" placeholder="e.g. Shuwa, Harees, Majboos..." />
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="categoryFilter" class="form-label">Category</label>
+                                    <select class="form-select" id="categoryFilter">
+                                        <option value="">All Categories</option>
+                                        <option value="Traditional Omani">Traditional Omani</option>
+                                        <option value="Gulf Specialties">Gulf Specialties</option>
+                                        <option value="Beverages">Beverages</option>
+                                        <option value="Dates &amp; Sweets">Dates &amp; Sweets</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button type="submit" class="btn btn-danger">Search</button>
+                                <button type="button" class="btn btn-outline-secondary" id="showAllFoods">Show all</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="field">
-                        <label for="category_filter">Category</label>
-                        <select id="category_filter" name="category">
-                            <option value="">All Categories</option>
-                            <option value="omani">Traditional Omani</option>
-                            <option value="gulf">Gulf Specialties</option>
-                            <option value="beverages">Beverages</option>
-                            <option value="desserts">Dates &amp; Sweets</option>
-                    </select>
                 </div>
-                </div>
-                <div class="buttons">
-                    <input type="submit" value="Search" />
-                    <input type="reset" value="Reset Filter" />
-                </div>
-            </fieldset>
-        </form>
+            </div>
+            <!-- Featured image -->
+            <div class="col-lg-5">
+                <img src="images/Omani-food.png" alt="Traditional Omani dishes" class="img-fluid rounded shadow-sm w-100" />
+            </div>
+        </div>
 
-        <h2>Featured Local Dishes</h2>
-        <img src="images/Omani-food.png" alt="Traditional Omani Shuwa" class="home-image" />
-
-        <h2>Nutritional Values Table</h2>
-        <div class="table-wrap">
-            <table class="meals-table">
-                <caption>Macro details per standard portion</caption>
-                <thead>
+        <!-- Dynamic table: the tbody starts empty and is filled by displayFoods() in js/tables.js -->
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-2">
+            <h2 class="h3 mb-0">Nutritional Values Table</h2>
+            <span class="badge text-bg-dark" id="foodCount"></span>
+        </div>
+        <div class="table-responsive mb-4">
+            <table class="table table-striped table-hover table-bordered align-middle caption-top">
+                <caption>Macro details per standard portion (approximate values)</caption>
+                <thead class="table-dark">
                     <tr>
-                        <th rowspan="2">Dish Name</th>
-                        <th rowspan="2">Category</th>
-                        <th rowspan="2">Portion Size</th>
-                        <th colspan="4">Nutrition per Portion</th>
+                        <th rowspan="2" class="align-middle">Dish Name</th>
+                        <th rowspan="2" class="align-middle">Category</th>
+                        <th rowspan="2" class="align-middle">Portion Size</th>
+                        <th colspan="4" class="text-center">Nutrition per Portion</th>
                     </tr>
                     <tr>
-                        <th class="num">Calories (kcal)</th>
-                        <th class="num">Protein (g)</th>
-                        <th class="num">Carbs (g)</th>
-                        <th class="num">Fat (g)</th>
+                        <th class="text-end">Calories (kcal)</th>
+                        <th class="text-end">Protein (g)</th>
+                        <th class="text-end">Carbs (g)</th>
+                        <th class="text-end">Fat (g)</th>
                     </tr>
-                </thead>    
-                <tbody>
-                    <tr>
-                        <td>Omani Shuwa</td>
-                        <td>Traditional Omani</td>
-                        <td>1 plate (250g)</td>
-                        <td class="num">580</td>
-                        <td class="num">42</td>
-                        <td class="num">35</td>
-                        <td class="num">28</td>
-                    </tr>
-                    <tr>
-                        <td>Chicken Majboos</td>
-                        <td>Traditional Omani</td>
-                        <td>1 plate</td>
-                        <td class="num">650</td>
-                        <td class="num">38</td>
-                        <td class="num">75</td>
-                        <td class="num">20</td>
-                    </tr>
-                    <tr>
-                        <td>Harees</td>
-                        <td>Traditional Omani</td>
-                        <td>1 bowl</td>
-                        <td class="num">400</td>
-                        <td class="num">25</td>
-                        <td class="num">45</td>
-                        <td class="num">12</td>
-                    </tr>
-                    <tr>
-                        <td>Omani Bread (Rakhal) with Honey</td>
-                        <td>Traditional Omani</td>
-                        <td>1 piece</td>
-                        <td class="num">250</td>
-                        <td class="num">6</td>
-                        <td class="num">45</td>
-                        <td class="num">5</td>
-                    </tr>
-                    <tr>
-                        <td>Karak Tea</td>
-                        <td>Beverages</td>
-                        <td>1 cup</td>
-                        <td class="num">120</td>
-                        <td class="num">3</td>
-                        <td class="num">18</td>
-                        <td class="num">4</td>
-                    </tr>
-                    <tr>
-                        <td>Khalas Dates</td>
-                        <td>Dates &amp; Sweets</td>
-                        <td>5 dates</td>
-                        <td class="num">120</td>
-                        <td class="num">1</td>
-                        <td class="num">32</td>
-                        <td class="num">0</td>
-                    </tr>
-                    <tr>
-                        <td>Laban</td>
-                        <td>Beverages</td>
-                        <td>1 cup</td>
-                        <td class="num">90</td>
-                        <td class="num">6</td>
-                        <td class="num">10</td>
-                        <td class="num">3</td>
-                    </tr>
-                </tbody>
+                </thead>
+                <tbody id="foodTableBody"></tbody>
             </table>
         </div>
 
-        <p class="cta">
-            Missing a traditional dish? <a href="contact.html">Suggest a missing food</a> to help us improve our database!
+        <!-- Add Food form: pushes a new Food() into the array and refreshes the table -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-danger text-white fw-semibold">Add a Food</div>
+            <div class="card-body">
+                <form id="addFoodForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-4">
+                            <label for="foodName" class="form-label">Dish name</label>
+                            <input type="text" class="form-control" id="foodName" required />
+                            <div class="invalid-feedback">Please enter the dish name.</div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <label for="foodCategory" class="form-label">Category</label>
+                            <select class="form-select" id="foodCategory" required>
+                                <option value="">Choose...</option>
+                                <option value="Traditional Omani">Traditional Omani</option>
+                                <option value="Gulf Specialties">Gulf Specialties</option>
+                                <option value="Beverages">Beverages</option>
+                                <option value="Dates &amp; Sweets">Dates &amp; Sweets</option>
+                            </select>
+                            <div class="invalid-feedback">Please choose a category.</div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <label for="foodPortion" class="form-label">Portion size</label>
+                            <input type="text" class="form-control" id="foodPortion" placeholder="e.g. 1 plate" required />
+                            <div class="invalid-feedback">Please enter the portion size.</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label for="foodCalories" class="form-label">Calories (kcal)</label>
+                            <input type="number" class="form-control" id="foodCalories" min="0" max="3000" required />
+                            <div class="invalid-feedback">0 &ndash; 3000</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label for="foodProtein" class="form-label">Protein (g)</label>
+                            <input type="number" class="form-control" id="foodProtein" min="0" max="300" required />
+                            <div class="invalid-feedback">0 &ndash; 300</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label for="foodCarbs" class="form-label">Carbs (g)</label>
+                            <input type="number" class="form-control" id="foodCarbs" min="0" max="500" required />
+                            <div class="invalid-feedback">0 &ndash; 500</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label for="foodFat" class="form-label">Fat (g)</label>
+                            <input type="number" class="form-control" id="foodFat" min="0" max="300" required />
+                            <div class="invalid-feedback">0 &ndash; 300</div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-danger">Add Food</button>
+                        <button type="reset" class="btn btn-outline-secondary">Clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <p class="text-muted">
+            Missing a traditional dish? <a href="contact.html" class="link-danger">Suggest a missing food</a> to help us improve our database!
         </p>
-    
     </main>
+
+    <!-- Bootstrap modal: opened by showAddedModal() in js/tables.js after an item is added -->
+    <div class="modal fade" id="addedModal" tabindex="-1" aria-labelledby="addedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h2 class="modal-title fs-5" id="addedModalLabel">Food added ✓</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="addedModalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-dark text-white text-center py-3">
         &copy; 2026 MacrOman &mdash; Team Prospects | COMP3700, Sultan Qaboos University
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/tables.js"></script>
 </body>
 </html>
