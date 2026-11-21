@@ -31,12 +31,15 @@
         // checks every field and shows the thank you message only if all of them are valid
         function validateQuestionnaire(event) {
 
-            event.preventDefault(); 
+            event.preventDefault(); // stop the page from reloading so we can check the fields first
 
-            var allValid = true;
+            var allValid = true;    // becomes false as soon as any field fails its check
 
 
             // name regex: first and last name, letters only, at least 2 letters each
+            // ^[A-Za-z]{2,}      -> starts with a word of 2+ English letters
+            // (\s+[A-Za-z]{2,})+ -> then one or more spaces followed by another word (so at least 2 words)
+            // $                  -> nothing else allowed after the last word (no digits or symbols)
             var nameValue = document.getElementById("fb_name").value.trim();
             var nameRegex = /^[A-Za-z]{2,}(\s+[A-Za-z]{2,})+$/;
 
@@ -50,6 +53,9 @@
             }
 
             // email regex: must end with squ.edu.om or student.squ.edu.om
+            // [A-Za-z0-9._-]+    -> the part before @ (letters, digits, dot, underscore, dash)
+            // @(student\.)?      -> the @ sign, then "student." is optional
+            // squ\.edu\.om$      -> must finish with squ.edu.om (the i flag ignores upper/lower case)
             var emailValue = document.getElementById("fb_email").value.trim();
 
             var emailRegex = /^[A-Za-z0-9._-]+@(student\.)?squ\.edu\.om$/i;
@@ -64,6 +70,9 @@
             }
 
             // phone regex: 8 digits starting with 7 or 9 with an optional +968 at the start
+            // (\+968\s?)?  -> optional Oman country code, optionally followed by one space
+            // [79]         -> first digit must be 7 or 9 (Omani mobile numbers)
+            // [0-9]{7}$    -> exactly 7 more digits, so 8 digits in total
             var phoneValue = document.getElementById("fb_phone").value.trim();
             var phoneRegex = /^(\+968\s?)?[79][0-9]{7}$/;
 
@@ -76,6 +85,7 @@
                 allValid = false;
             }
 
+            // role select: the first option has an empty value, so "" means the user did not choose a role
             var roleValue = document.getElementById("fb_role").value;
             if (roleValue !== "") {
                 setFieldStatus("fb_role", "roleError", true, "");
@@ -85,6 +95,8 @@
                 allValid = false;
             }
 
+            // satisfaction radios: loop over the 4 radio buttons and keep the value of the checked one
+            // if none is checked selectedRating stays "" and the red error text under the radios is shown
             var ratingRadios = document.getElementsByName("satisfaction");
             var selectedRating = "";
 
@@ -104,6 +116,7 @@
                 allValid = false;
             }
 
+            // comments textarea: trim() removes spaces at both ends, then it must have at least 10 characters
             var commentsValue = document.getElementById("fb_comments").value.trim();
             
             if (commentsValue.length >= 10) {
