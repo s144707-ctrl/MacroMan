@@ -14,6 +14,9 @@
 
             document.getElementById("resultCard").style.display = "none";
             document.getElementById("calcError").style.display = "none";
+
+            // remove the Bootstrap green/red borders left from the last check
+            document.getElementById("calcForm").classList.remove("was-validated");
         }
 
         // runs when the form is submitted
@@ -32,8 +35,14 @@
             var errorBox = document.getElementById("calcError");
             var resultCard = document.getElementById("resultCard");
 
+            // Bootstrap validation: adding "was-validated" to the form makes every field
+            // turn green (valid) or red with its invalid-feedback message (missing or outside min/max)
+            var form = document.getElementById("calcForm");
+            form.classList.add("was-validated");
+
             // stop and show an error if a number is missing or out of range
-            if (isNaN(age) || isNaN(weight) || isNaN(height) || age < 13 || age > 100 || weight < 30 || height < 120) {
+            // (|| means: if ANY one of these conditions is true the input is rejected)
+            if (!form.checkValidity() || isNaN(age) || isNaN(weight) || isNaN(height) || age < 13 || age > 100 || weight < 30 || height < 120) {
                 errorBox.innerHTML = "Please enter valid numbers for age (13-100), weight (min 30 kg), and height (min 120 cm).";
                 errorBox.style.display = "block";
                 resultCard.style.display = "none";
@@ -53,6 +62,7 @@
                 bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
             }
 
+            // TDEE (total daily energy expenditure) = BMR x activity factor (1.2 to 1.9 from the select)
             var tdee = bmr * activity;
             var targetCalories = tdee;
             var noteText = "";
@@ -82,15 +92,19 @@
                 noteText = "Calories set to match your daily maintenance energy expenditure.";
             }
 
+            // safety rule: the daily target is never allowed to go below 1,200 kcal
             if (targetCalories < 1200) {
                 targetCalories = 1200;
                 noteText = noteText + " Adjusted up to the 1,200 kcal minimum safe daily intake.";
             }
 
+            // default macro split: 25% of calories from protein, 45% from carbs, 30% from fat
             var proteinPct = 0.25;
             var carbsPct = 0.45;
             var fatPct = 0.30;
 
+            // more protein for muscle gain OR for adults 60+ (to protect muscle mass);
+            // active people (activity 1.55 or more) who want to lose weight get more protein and fewer carbs
             if (goal === "gain" || age >= 60) {
                 proteinPct = 0.30;
                 carbsPct = 0.45;
@@ -104,7 +118,8 @@
                 fatPct = 0.30;
             }
 
-
+            // turn calories into grams: protein and carbs have 4 kcal per gram, fat has 9 kcal per gram
+            // grams = (target calories x percentage) / kcal per gram
             var proteinGrams = Math.round((targetCalories * proteinPct) / 4);
             var carbsGrams = Math.round((targetCalories * carbsPct) / 4);
             var fatGrams = Math.round((targetCalories * fatPct) / 9);
@@ -174,7 +189,8 @@
 
                         <div id="calcError" class="alert alert-danger" role="alert"></div>
 
-                        <form onsubmit="return calculateMacros(event)" onreset="initCalculator()">
+                        <!-- needs-validation + novalidate: Bootstrap shows the red/green feedback instead of the browser popup -->
+                        <form id="calcForm" class="needs-validation" onsubmit="return calculateMacros(event)" onreset="initCalculator()" novalidate>
                             <div class="row g-3 mb-3">
                                 <div class="col-sm-6">
                                     <label for="calc_gender" class="form-label fw-bold">Gender</label>
@@ -187,16 +203,19 @@
                                 <div class="col-sm-6">
                                     <label for="calc_age" class="form-label fw-bold">Age (years)</label>
                                     <input type="number" class="form-control" id="calc_age" min="13" max="100" value="21" required />
+                                    <div class="invalid-feedback">Enter an age between 13 and 100.</div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="calc_weight" class="form-label fw-bold">Weight (kg)</label>
                                     <input type="number" class="form-control" id="calc_weight" min="30" max="250" step="0.5" value="75" required />
+                                    <div class="invalid-feedback">Enter a weight between 30 and 250 kg.</div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="calc_height" class="form-label fw-bold">Height (cm)</label>
                                     <input type="number" class="form-control" id="calc_height" min="120" max="230" value="175" required />
+                                    <div class="invalid-feedback">Enter a height between 120 and 230 cm.</div>
                                 </div>
                             </div>
 
